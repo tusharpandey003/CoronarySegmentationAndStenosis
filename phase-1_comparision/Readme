@@ -1,0 +1,36 @@
+Phase 1 Experimental Results: Foundational Artery Segmentation
+
+Objective
+The primary goal of Phase 1 was to train a robust feature extractor capable of accurately segmenting coronary arteries from a diverse set of medical imaging data.
+To identify the optimal architecture, five different models were trained on a composite dataset comprising IMAGE-CAS, ARCADE/syntax, and DCA-1.
+The performance of each model was rigorously evaluated on a held-out test set using five key metrics: Dice Score, Intersection over Union (IoU), Sensitivity, Specificity, and overall Accuracy.
+Performance ComparisonThe final test results for each of the five candidate architectures are summarized below.
+The best performance for each metric is highlighted in bold.
+
+
+
+Model ArchitectureEncoder BackboneDice ScoreIoU (Jaccard)SensitivitySpecificityAccuracy
+UNet++ResNet340.68850.53210.62470.99450.9837
+DenseNet-UnetDenseNet1210.73460.58420.70080.99380.9851
+Inception-UnetInceptionResNetV20.74540.59810.70690.99440.9857
+SegFormer-UnetMiT-b10.75340.60600.72370.99400.9860
+EfficientNet-UnetEfficientNet-B40.76280.61920.72750.99460.9867
+
+
+
+Analysis and Conclusion
+
+The comparative analysis reveals a clear winner from our experiments.
+Top Performer: The EfficientNet-Unet (with an EfficientNet-B4 backbone) demonstrated superior performance, achieving the highest scores across all five evaluation metrics.
+Its leading Dice Score (0.7628) and IoU (0.6192) are particularly noteworthy, as these are the most critical metrics for evaluating the accuracy of segmentation tasks.
+This indicates that the architecture's principled approach to compound scaling (balancing network depth, width, and resolution) is highly effective for this specific problem.
+Strong Contenders: The SegFormer-Unet (with a MiT-b1 transformer backbone) proved to be the second-best model, showing strong results that were competitive with the winner.
+The Inception-Unet also performed admirably, confirming that its multi-scale feature extraction is a valuable strategy.
+Baseline Performance: The UNet++ with a ResNet34 encoder, while a solid model, established the performance baseline. 
+The results clearly show that the more modern architectures (EfficientNet, SegFormer, Inception) provide a significant performance uplift.
+
+Decision for Phase 2
+
+Based on its dominant performance across all key metrics, the EfficientNet-Unet architecture is unequivocally the best choice to serve as the foundational backbone for Phase 2 of this project.
+Its proven ability to generate highly accurate feature representations of coronary arteries will be critical for the more complex multi-task learning challenge of simultaneous stenosis segmentation, detection, and classification.
+The next step will be to retrain the EfficientNet-Unet model to produce a final, clean checkpoint file (artery_backbone_efficientnet.pth) that can be reliably loaded for fine-tuning in the next stage.
