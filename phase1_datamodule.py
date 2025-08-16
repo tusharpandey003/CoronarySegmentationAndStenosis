@@ -7,12 +7,11 @@ import numpy as np
 import nibabel as nib
 import cv2
 from PIL import Image
-# --- FIX APPLIED HERE: Using the older, compatible transforms API ---
 import torchvision.transforms as T
 from torchvision.transforms import InterpolationMode
 
 # ===================================================================
-# 1. STANDARDIZED TRANSFORMS (Legacy API)
+# 1. STANDARDIZED TRANSFORMS 
 # ===================================================================
 def get_image_transforms(is_train: bool, target_size: int = 512):
     """
@@ -47,7 +46,7 @@ def get_mask_transforms(target_size: int = 512):
     ])
 
 # ===================================================================
-# 2. INDIVIDUAL DATASET CLASSES (Updated for legacy transforms)
+# 2. INDIVIDUAL DATASET CLASSES 
 # ===================================================================
 class ImageCASDataset(Dataset):
     """Dataset for IMAGE-CAS with specific windowing/normalization."""
@@ -172,7 +171,7 @@ class CoronaryDataModule(pl.LightningDataModule):
         print("-" * 50)
         print(f"Setting up data for stage: {stage}")
 
-        # --- DCA-1 Data Splitting (70/10/20) ---
+        # --- DCA-1 Data Splitting  ---
         all_dca1_files = []
         dca1_root = self.data_config['dca1_root']
         img_files = [f for f in os.listdir(dca1_root) if f.endswith('.pgm') and not f.endswith('_gt.pgm')]
@@ -188,7 +187,7 @@ class CoronaryDataModule(pl.LightningDataModule):
         dca1_val_files = all_dca1_files[train_end:val_end]
         dca1_test_files = all_dca1_files[val_end:]
 
-        # --- ImageCAS Data Splitting (70/10/20) ---
+        # --- ImageCAS Data Splitting  ---
         all_cas_slices = []
         cas_root = self.data_config['imagecas_root']
         img_vols = sorted([f for f in os.listdir(cas_root) if f.endswith('.img.nii.gz')])
